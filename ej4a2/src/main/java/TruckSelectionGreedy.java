@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * ENUNCIADO:
@@ -73,13 +76,36 @@ import java.util.*;
  */
 public class TruckSelectionGreedy {
 
-    public static List<Integer> selectTrucksGreedy(int[] kilometers, int[] tankLiters, int totalFuel) {
-            // TODO: Implement greedy algorithm prioritizing efficiency (km/l)
-        return new ArrayList<>();
+    public static List<Integer> selectTrucksGreedy(int[] kilometers, int[] tankLiters, int totalFuel) 
+    {
+        // TODO: Implement greedy algorithm prioritizing efficiency (km/l)
+        int n = kilometers.length;
+        Integer[] trucks = new Integer[kilometers.length];
+        for (int i = 0; i < trucks.length; i++) trucks[i] = i;
+            
+        // Sort trucks by efficiency in descending order
+        Arrays.sort(trucks, (a, b) -> {
+            double efficiencyA = (double) kilometers[a] / tankLiters[a];
+            double efficiencyB = (double) kilometers[b] / tankLiters[b];
+            return Double.compare(efficiencyB, efficiencyA);
+        });
+        List<Integer> selectedTrucks = new ArrayList<>();
+        int remainingFuel = totalFuel;
+        int i=0;
+        while((i<n && remainingFuel >= tankLiters[trucks[i]]))
+        {
+            selectedTrucks.add(trucks[i]+1);
+            remainingFuel -= tankLiters[trucks[i]];
+            i++;
+        }
+        
+        return selectedTrucks;
+       
     }
 
-    /*
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) 
+    {
         int[] kilometers = {400, 600, 1200, 1000};
         int[] tankLiters = {100, 100, 300, 500};
         int totalFuel = 500;
@@ -87,7 +113,7 @@ public class TruckSelectionGreedy {
         List<Integer> selected = selectTrucksGreedy(kilometers, tankLiters, totalFuel);
         System.out.println("Selected: " + selected);
     }
-    */
+    
 }
 
-}
+
