@@ -72,13 +72,25 @@ public class ProductEfficiencySorter {
     // and returns the list sorted in ascending order using insertion sort.
     public static double[] sortByEfficiency(double[] efficiencies) {
         // TODO: Implement insertion sort
+        for (int i = 1; i < efficiencies.length; i++) {
+            double key = efficiencies[i];
+            int j = i - 1;
+
+            // Move elements of efficiencies[0..i-1], that are greater than key,
+            // to one position ahead of their current position
+            while (j >= 0 && efficiencies[j] > key) {
+                efficiencies[j + 1] = efficiencies[j];
+                j = j - 1;
+            }
+            efficiencies[j + 1] = key;
+        }
         return efficiencies;
     }
 	
 	// -------------------------------------------------------------
     // Manual test using IDE
     // -------------------------------------------------------------
-    /*
+    
     public static void main(String[] args) {
         double[] efficiencies = {12.0, 10.0, 4.0, 5.0, 4.0, 9.0, 10.0, 6.0, 9.0, 10.0};
         double[] sorted = sortByEfficiency(efficiencies);
@@ -90,7 +102,7 @@ public class ProductEfficiencySorter {
         }
         System.out.println("]");
     }
-    */
+    
 	// Torna a comentar aquest main quan vulguis executar els tests amb maven test
     // Vuelve a comentar este main cuando quieras ejecutar los tests con:
     // mvn test
